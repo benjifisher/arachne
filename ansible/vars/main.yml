@@ -1,3 +1,10 @@
 ---
+## Apache settings
 # Do not create vhost files. I will do that manually.
 apache_create_vhosts: false
+ 
+## MySQL settings
+# Memory settings (default values optimized ~512MB RAM).
+mysql_key_buffer_size: "16M"
+mysql_max_allowed_packet: "16M"
+mysql_myisam_sort_buffer_size: "16M"
