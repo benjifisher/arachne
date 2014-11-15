@@ -1,5 +1,7 @@
 # Provisioning my web server
 
+## Overview
+
 I plan to provision my new web server manually, setting up a few different
 partitions:
 
@@ -31,9 +33,21 @@ and perhaps experiment with others such as
 - PHP Farm
 - Docker
 
+## Testing with Vagrant
+
 This repository also contains a Vagrantfile, which I will use for testing.  I
 will have to be careful not to configure anything insecurely while working on
 the local VM.
+
+With the included inventory file, the following commands work on the Vagrant
+VM:
+
+```
+$ ansible vagrant -i ansible/hosts -m ping
+$ ansible-playbook -i ansible/hosts -l vagrant ansible/playbook.yml
+```
+
+## Managing sites
 
 I will also use git to keep track of my apache config files.  I do not plan to
 install them using Ansible, and I have not yet decided whether to keep them
