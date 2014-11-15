@@ -1,0 +1,11 @@
+---
+- hosts: all
+  # gather_facts: no
+
+  vars_files:
+  - vars/main.yml
+
+  roles:
+    - apache
+
+  tasks:
