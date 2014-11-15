@@ -4,8 +4,10 @@
 
   vars_files:
   - vars/main.yml
+  - vars/passwords.yml
 
   roles:
     - apache
+    - mysql
 
   tasks:
