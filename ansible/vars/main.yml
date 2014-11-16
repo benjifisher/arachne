@@ -14,7 +14,7 @@ web_server_group: www-data
 ## Apache settings
 # Do not create vhost files. I will do that manually.
 apache_create_vhosts: false
- 
+
 ## MySQL settings
 # Memory settings (default values optimized ~512MB RAM).
 mysql_key_buffer_size: "16M"
@@ -34,3 +34,17 @@ php_short_open_tag: true
 # Only install git, no extra packages.
 git_packages:
   - git
+
+# Databases. The corresponding users are defined in passwords.yml.
+mysql_databases:
+  - name: 3mile
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+  - name: amcbostondev
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+# Full example:
+# mysql_databases:
+#   - { name: example, collation: utf8_general_ci, encoding: utf8, replicate: 1 }
