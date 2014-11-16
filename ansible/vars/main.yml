@@ -8,3 +8,12 @@ apache_create_vhosts: false
 mysql_key_buffer_size: "16M"
 mysql_max_allowed_packet: "16M"
 mysql_myisam_sort_buffer_size: "16M"
+
+## PHP settings
+php_memory_limit: "128M"
+php_max_execution_time: "30"
+php_upload_max_filesize: "32M"
+php_date_timezone: "America/New_York"
+php_enable_php_fpm: true
+php_enable_apc: false
+php_short_open_tag: true
