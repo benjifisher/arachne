@@ -13,5 +13,6 @@
     - php
     - php-mysql
     - composer
+    - drush
 
   tasks:
