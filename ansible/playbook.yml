@@ -14,5 +14,7 @@
     - php-mysql
     - composer
     - drush
+    # - munin
+    # - munin-node
 
   tasks:

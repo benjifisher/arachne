@@ -29,7 +29,7 @@ the server:
 as well as
 
 - Postfix
-- Munin
+- Munin (coming soon)
 
 Later, I hope to add
 
