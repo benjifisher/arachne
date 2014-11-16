@@ -2,6 +2,14 @@
 ## Basic settings
 # The hostname can be overridden in the inventory file. The value set here will be used by vagrant.
 hostname: arachne.dev
+web_user: drupal
+# These directories will be owned by the web user. Values are file modes.
+web_dirs:
+  '/opt/drupal/repos': "0700"
+  '/opt/drupal/sites': "02755"
+  '/opt/drupal/files': "02775"
+# It is a little kludgy to set this here.
+web_server_group: www-data
 
 ## Apache settings
 # Do not create vhost files. I will do that manually.
