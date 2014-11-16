@@ -6,6 +6,11 @@
   - vars/main.yml
   - vars/passwords.yml
 
+  pre_tasks:
+    - name: Set the hostname.
+      hostname: name={{ hostname }}
+      when: hostname is defined and hostname != 'skip'
+
   roles:
     - git
     - apache

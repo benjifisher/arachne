@@ -1,4 +1,8 @@
 ---
+## Basic settings
+# The hostname can be overridden in the inventory file. The value set here will be used by vagrant.
+hostname: arachne.dev
+
 ## Apache settings
 # Do not create vhost files. I will do that manually.
 apache_create_vhosts: false
