@@ -6,7 +6,7 @@ This repository is not designed to be flexible enough to be adapted by others,
 but feel free to have a look at how I am setting things up.
 
 Most of the work is done by several of [Jeff
-Geerlin](https://github.com/geerlingguy)'s Ansible roles. I have renamed the
+Geerling](https://github.com/geerlingguy)'s Ansible roles. I have renamed the
 roles and edited the dependencies, but not tried to hide the origin.  I have
 made a few tweaks, and if I think any of these are generally useful, then I
 will send Jeff a pull request.
