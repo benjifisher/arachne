@@ -39,3 +39,23 @@
         state: directory
         recurse: yes
       with_dict: web_dirs
+
+    - name: Ensure that the bare repositories are created.
+      command: >
+        git init --bare  --shared=0600 {{ repo_dir }}/{{ item.name }}.git
+      sudo: yes
+      sudo_user: "{{ web_user }}"
+      with_items: mysql_databases
+
+      # When we create the bare repositories, they have no master branch, so
+      # git complains when we try to clone them. For now, just ignore the
+      # errors.
+    - name: Ensure that the repositories are cloned to the sites directory.
+      git:
+        repo: "{{ repo_dir }}/{{ item.name }}.git"
+        dest: "{{ site_dir }}/{{ item.name }}"
+        update: no
+      sudo: yes
+      sudo_user: "{{ web_user }}"
+      ignore_errors: true
+      with_items: mysql_databases

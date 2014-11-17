@@ -8,6 +8,8 @@ web_dirs:
   '/opt/drupal/repos': "0700"
   '/opt/drupal/sites': "02755"
   '/opt/drupal/files': "02775"
+repo_dir: "/opt/drupal/repos"
+site_dir: "/opt/drupal/sites"
 # It is a little kludgy to set this here.
 web_server_group: www-data
 
