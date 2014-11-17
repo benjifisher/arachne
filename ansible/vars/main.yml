@@ -4,12 +4,11 @@
 hostname: arachne.dev
 web_user: drupal
 # These directories will be owned by the web user. Values are file modes.
+web_base_dir: /opt/drupal
 web_dirs:
-  '/opt/drupal/repos': "0700"
-  '/opt/drupal/sites': "02755"
-  '/opt/drupal/files': "02775"
-repo_dir: "/opt/drupal/repos"
-site_dir: "/opt/drupal/sites"
+  repos: "0700"
+  sites: "02755"
+  files: "02775"
 # It is a little kludgy to set this here.
 web_server_group: www-data
 
@@ -47,6 +46,7 @@ mysql_databases:
     collation: utf8_general_ci
     encoding: utf8
     replicate: 1
-# Full example:
-# mysql_databases:
-#   - { name: example, collation: utf8_general_ci, encoding: utf8, replicate: 1 }
+
+drupal_sites:
+  - { name: 3mile, repo: ~/arachne/sites/3mile.org }
+  - { name: amcbostondev, repo: ~/arachne/sites/amcbostondev.org }
