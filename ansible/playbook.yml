@@ -40,6 +40,15 @@
         recurse: yes
       with_dict: web_dirs
 
+    - name: Ensure that access is granted to web roots.
+      template:
+        src=templates/security-arachne.conf.j2
+        dest=/etc/apache2/conf-available/security-arachne.conf
+
+    - name: Ensure that the custom access control is enabled.
+      command: a2enconf security-arachne
+      notify: restart apache
+
     - name: Ensure that the bare repositories are initialized.
       command: >
         git init --bare  --shared=0600

@@ -15,6 +15,10 @@ web_server_group: www-data
 ## Apache settings
 # Do not create vhost files. I will do that manually.
 apache_create_vhosts: false
+apache_mods_enabled:
+  - headers.load
+  - rewrite.load
+  - ssl.load
 
 ## MySQL settings
 # Memory settings (default values optimized ~512MB RAM).
