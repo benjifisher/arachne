@@ -1,14 +1,12 @@
 # {{ ansible_managed }}
 
-{% for item in drupal_sites %}
-<Directory {{ web_base_dir }}/sites/{{ item.name }}/drupal/>
+<Directory {{ web_base_dir }}/sites/*/drupal/>
     Options Indexes FollowSymLinks
     DirectoryIndex index.php index.html
-    AllowOverride None
+    AllowOverride All
     Require all granted
 </Directory>
 
-{% endfor %}
 <DirectoryMatch "/\.git">
     Require all denied
 </DirectoryMatch>
