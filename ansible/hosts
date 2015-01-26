@@ -7,7 +7,7 @@ localhost ansible_connection=local hostname=skip
 [vagrant]
 # If using a numeric IP address, then make sure that it agrees with the one
 # specified in the Vagrantfile.
-192.168.88.88 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key hostname=arachne.dev
+arachne.dev ansible_ssh_host=192.168.88.88 ansible_ssh_port=22 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key hostname=arachne.dev
 
 [prod]
 # I think I can use a hostname defined in /etc/hosts
