@@ -40,4 +40,12 @@
   template:
     src: apache24.conf.j2
     dest: /etc/apache2/conf-available/munin.conf
+
+# I thought that installing Munin should create the symlink, and removing the
+# source would not remove the link, but this seems to be needed.
+- name: Enable the Munin apache configuration.
+  file:
+    path: /etc/apache2/conf-enabled/munin.conf
+    src: /etc/apache2/conf-available/munin.conf
+    state: link
   notify: restart apache

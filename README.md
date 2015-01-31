@@ -29,7 +29,7 @@ the server:
 as well as
 
 - Postfix
-- Munin (coming soon)
+- Munin
 
 Later, I hope to add
 
@@ -79,6 +79,7 @@ that looks something like this:
 ```
 # This file should not be under version control.
 ---
+munin_admin_password: XXXXXXXX
 mysql_root_password: XXXXXXXX
 
 mysql_users:

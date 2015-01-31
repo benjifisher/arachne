@@ -19,8 +19,8 @@
     - php-mysql
     - composer
     - drush
-    # - munin
-    # - munin-node
+    - munin
+    - munin-node
 
   tasks:
     - name: Ensure that the web user exists.

@@ -54,3 +54,10 @@ mysql_databases:
 drupal_sites:
   - { name: 3mile, repo: ~/arachne/sites/3mile.org }
   - { name: amcbostondev, repo: ~/arachne/sites/amcbostondev.org }
+
+munin_hosts:
+  - {
+    name: "{{ hostname }}",
+    address: "127.0.0.1",
+    extra: ["use_node_name yes"]
+  }
