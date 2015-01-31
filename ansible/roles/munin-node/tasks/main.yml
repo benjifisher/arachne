@@ -17,12 +17,29 @@
     owner=root group=root mode=644
   notify: restart munin-node
 
+# All this just to add the php_opcache plugin to Munin ...
+- name: Download contributed Munin plugins.
+  git:
+    dest: /etc/munin/contrib
+    repo: https://github.com/munin-monitoring/contrib.git
+
+- name: Ensure the php_opcache plugin for Munin is executable.
+  file:
+    path: /etc/munin/contrib/plugins/php/php_opcache
+    mode: "a+x"
+
 - name: Generate plugin configuration.
   template: >
     src=plugin-conf.j2
     dest=/etc/munin/plugin-conf.d/ansible.conf
     owner=root group=root mode=644
   notify: restart munin-node
+
+- name: Enable the php_opcache plugin.
+  file:
+    path: "{{ munin_plugin_dest_path }}/php_opcache"
+    src: /etc/munin/contrib/plugins/php/php_opcache
+    state: link
 
 - name: Enable additional plugins.
   file: >

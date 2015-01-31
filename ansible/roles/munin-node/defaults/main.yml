@@ -23,9 +23,10 @@ munin_node_plugins: []
 
 # Plugin configuration options (the key is the plugin heading, items in the
 # array will be options for the plugin).
-munin_node_config: {
+munin_node_config:
   # "ps_test": {
   #   "env.regex": "bash",
   #   "env.name": "bash"
   # }
-}
+  'php_opcache':
+    'env.URL': 'http://localhost/munin-plugin/php/php_opcache.php'
