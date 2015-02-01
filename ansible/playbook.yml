@@ -121,3 +121,15 @@
     sudo: yes
     sudo_user: "{{ web_user }}"
     with_items: drupal_sites
+
+  - name: Ensure that /etc/drush is created.
+    file:
+      path: /etc/drush
+      group: "{{ web_user }}"
+      state: directory
+
+  - name: Ensure that drush alias files are available on the server.
+    template:
+      dest: /etc/drush/{{ item.name }}.alias.drushrc.php
+      src: templates/remote.drushrc.php.j2
+    with_items: drupal_sites

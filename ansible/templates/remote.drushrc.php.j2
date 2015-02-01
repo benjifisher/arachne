@@ -1,0 +1,6 @@
+<?php
+# {{ ansible_managed }}
+$aliases['{{ item.name }}'] = array(
+ 'root' => '{{ web_base_dir }}/sites/{{ item.name }}/drupal',
+ 'uri' => 'http://{{ item.server }}',
+);
