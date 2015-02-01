@@ -68,6 +68,16 @@
     with_items: drupal_sites
     notify: restart apache
 
+  # See https://www.drupal.org/node/811406
+  - name: Ensure that the server recognizes itself.
+    lineinfile:
+      dest: /etc/hosts
+      state: present
+      insertafter: '127\.0\.0\.1 localhost'
+      line: "127.0.0.1 {{ item.server }}"
+    with_items: drupal_sites
+    when: ansible_ssh_user == 'vagrant'
+
   - name: Ensure that the bare repositories are initialized.
     command: >
       git init --bare  --shared=0600
