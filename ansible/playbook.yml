@@ -87,7 +87,7 @@
     - name: Add the remote server to the local git repository.
       command: >
         {{ item.invocation.module_args }} add {{ hostname }}
-        {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item }}.git
+        {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item.name }}.git
       when: not item['stdout'] | search(hostname)
       delegate_to: 127.0.0.1
       sudo: False

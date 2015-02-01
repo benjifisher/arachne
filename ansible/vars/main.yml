@@ -71,10 +71,13 @@ munin_hosts:
     name: "{{ hostname }}",
     address: "127.0.0.1",
     extra: ["use_node_name yes"]
-  }
+    }
 
 # Cache size for APC or OPCache
 php_apc_shm_size: "256M"
 
 php_enable_apc: false
 php_enable_opcache: true
+
+# This is used for the update option on the git module.
+drush_keep_updated : yes
