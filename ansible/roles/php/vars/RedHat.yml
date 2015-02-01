@@ -2,6 +2,7 @@
 php_conf_path: /etc
 php_extension_conf_path: /etc/php.d
 php_apc_conf_filename: apc.ini
+php_opcache_conf_filename: opcache.ini
 __php_packages:
   - ImageMagick
   - php

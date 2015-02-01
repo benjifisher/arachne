@@ -52,6 +52,16 @@
   when: php_enable_apc
   notify: restart webserver
 
+- name: Place OPcache configuration file in place.
+  template:
+    src: opcache.ini.j2
+    dest: "{{ php_extension_conf_path }}/{{ php_opcache_conf_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: php_enable_opcache
+  notify: restart webserver
+
 - name: Ensure php-fpm is started and enabled at boot (if configured).
   service:
     name: "{{ php_fpm_service_name }}"

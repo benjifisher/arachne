@@ -61,3 +61,9 @@ munin_hosts:
     address: "127.0.0.1",
     extra: ["use_node_name yes"]
   }
+
+# Cache size for APC or OPCache
+php_apc_shm_size: "256M"
+
+php_enable_apc: false
+php_enable_opcache: true

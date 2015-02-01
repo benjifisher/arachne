@@ -117,3 +117,7 @@ Before visiting a site, I need to do the following:
    output. Or modify settings.php.  See https://www.drupal.org/node/811406
 
 Soon, I will have to automate some of these steps.
+
+## Todo
+
+1. Set up SSH keys so that I can connect from local to drupal@remote.
