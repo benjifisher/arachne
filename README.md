@@ -116,4 +116,5 @@ Before visiting a site, I need to do the following:
 9. (Vagrant only): edit /etc/hosts on the VM so that the site can eat its own
    output. Or modify settings.php.  See https://www.drupal.org/node/811406
 
-Soon, I will have to automate some of these steps.
+Steps 1-4 and 9 are now handled by Ansible.  Soon, I will have to automate some
+of the remaining steps.
