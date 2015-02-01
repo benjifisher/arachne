@@ -70,6 +70,8 @@ VM:
 ```
 $ ansible vagrant -i ansible/hosts -m ping
 $ ansible-playbook -i ansible/hosts -l vagrant ansible/playbook.yml
+$ ansible-playbook --syntax-check -i ansible/hosts ansible/playbook.yml
+$ ansible-playbook -i ansible/hosts -l vagrant --start-at-task="Enable the vhost files." -vvv ansible/playbook.yml
 ```
 
 ## Batteries Not Included
@@ -118,3 +120,8 @@ Before visiting a site, I need to do the following:
 
 Steps 1-4 and 9 are now handled by Ansible.  Soon, I will have to automate some
 of the remaining steps.
+
+## Bugs
+
+- The `munin-node` service does not restart. Do `$ sudo service munin-node restart` manually in order to see the OPCache graph (in the nginx section, another todo).
+- The first time I SSH to the new host, I have to tell openssl to add the server's key to my `known_hosts` file. If that happens while Ansible is doing a `git push`, then the command fails. Run it again and it should be OK.
