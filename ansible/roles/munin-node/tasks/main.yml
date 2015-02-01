@@ -40,6 +40,7 @@
     path: "{{ munin_plugin_dest_path }}/php_opcache"
     src: /etc/munin/contrib/plugins/php/php_opcache
     state: link
+  notify: restart munin-node
 
 - name: Enable additional plugins.
   file: >
