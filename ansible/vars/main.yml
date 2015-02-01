@@ -50,10 +50,21 @@ mysql_databases:
     collation: utf8_general_ci
     encoding: utf8
     replicate: 1
+  - name: 200doc
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
 
 drupal_sites:
-  - { name: 3mile, repo: ~/arachne/sites/3mile.org }
-  - { name: amcbostondev, repo: ~/arachne/sites/amcbostondev.org }
+  - name: 3mile
+    repo: /Users/benji/Sites/3mile.org
+    vhost: ~/arachne/arachne-vm/vhosts/3mile.org.conf
+  - name: amcbostondev
+    repo: /Users/benji/Sites/amcboston.org
+    vhost: ~/arachne/arachne-vm/vhosts/amcbostondev.org.conf
+  - name: 200doc
+    repo: /Users/benji/Sites/200doc.org
+    vhost: ~/arachne/arachne-vm/vhosts/200doc.conf
 
 munin_hosts:
   - {

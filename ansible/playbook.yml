@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  # gather_facts: no
+  gather_facts: no
 
   vars_files:
   - vars/main.yml
@@ -12,15 +12,15 @@
       when: hostname is defined and hostname != 'skip'
 
   roles:
-    - git
+    # - git
     - apache
-    - mysql
-    - php
-    - php-mysql
-    - composer
-    - drush
-    - munin
-    - munin-node
+    # - mysql
+    # - php
+    # - php-mysql
+    # - composer
+    # - drush
+    # - munin
+    # - munin-node
 
   tasks:
     - name: Ensure that the web user exists.
@@ -57,6 +57,17 @@
       command: a2enconf security-arachne
       notify: restart apache
 
+    - name: Install the vhost files.
+      copy:
+        dest: /etc/apache2/sites-available/{{ item.name }}.conf
+        src: "{{ item.vhost }}"
+      with_items: drupal_sites
+
+    - name: Enable the vhost files.
+      command: a2ensite {{ item.name }}
+      with_items: drupal_sites
+      notify: restart apache
+
     - name: Ensure that the bare repositories are initialized.
       command: >
         git init --bare  --shared=0600
@@ -65,27 +76,35 @@
       sudo_user: "{{ web_user }}"
       with_items: drupal_sites
 
-      # TODO: This will have to be done from localhost.
-    - name: Ensure that the repositories are cloned from local copies.
-      git:
-        repo: "{{ item.repo }}"
-        dest: "{{ web_base_dir }}/sites/{{ item.name }}"
-        update: no
-      sudo: yes
-      sudo_user: "{{ web_user }}"
-      ignore_errors: true
-      # with_items: drupal_sites
-      with_items: []
+    - name: Check whether the remote is defined.
+      command: git --git-dir={{ item.repo }}/.git remote
+      register: remote_exists
+      delegate_to: 127.0.0.1
+      sudo: False
+      changed_when: False
+      with_items: drupal_sites
 
-      # When we create the bare repositories, they have no master branch, so
-      # git complains when we try to clone them. For now, just ignore the
-      # errors.
+    - name: Add the remote server to the local git repository.
+      command: >
+        {{ item.invocation.module_args }} add {{ hostname }}
+        {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item }}.git
+      when: not item['stdout'] | search(hostname)
+      delegate_to: 127.0.0.1
+      sudo: False
+      with_items: remote_exists.results
+
+    - name: Ensure that the repositories are cloned from local copies.
+      local_action: >
+        command git --git-dir={{ item.repo }}/.git push {{ hostname }} master
+      sudo: False
+      with_items: drupal_sites
+      # with_items: []
+
     - name: Ensure that the repositories are cloned to the sites directory.
       git:
         repo: "{{ web_base_dir }}/repos/{{ item.name }}.git"
         dest: "{{ web_base_dir }}/sites/{{ item.name }}"
-        update: no
+        update: yes
       sudo: yes
       sudo_user: "{{ web_user }}"
-      ignore_errors: true
       with_items: drupal_sites
