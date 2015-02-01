@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  gather_facts: no
+  # gather_facts: no
 
   vars_files:
   - vars/main.yml
@@ -12,15 +12,15 @@
       when: hostname is defined and hostname != 'skip'
 
   roles:
-    # - git
+    - git
     - apache
-    # - mysql
-    # - php
-    # - php-mysql
-    # - composer
-    # - drush
-    # - munin
-    # - munin-node
+    - mysql
+    - php
+    - php-mysql
+    - composer
+    - drush
+    - munin
+    - munin-node
 
   tasks:
     - name: Ensure that the web user exists.
