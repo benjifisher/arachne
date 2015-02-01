@@ -28,7 +28,15 @@
         name: "{{ web_user }}"
         groups: "{{ web_server_group }}"
         append: yes
+        shell: /bin/bash
         state: present
+
+    - name: Set up authorized_keys for the web user.
+      authorized_key:
+        user: "{{ web_user }}"
+        key: "{{ item }}"
+        state: present
+      with_file: /Users/benji/.ssh/id_rsa.pub
 
     - name: Ensure that required directories are created.
       file:
