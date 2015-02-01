@@ -7,104 +7,107 @@
   - vars/passwords.yml
 
   pre_tasks:
-    - name: Set the hostname.
-      hostname: name={{ hostname }}
-      when: hostname is defined and hostname != 'skip'
+  - name: Set the hostname.
+    hostname: name={{ hostname }}
+    when: hostname is defined and hostname != 'skip'
 
   roles:
-    - git
-    - apache
-    - mysql
-    - php
-    - php-mysql
-    - composer
-    - drush
-    - munin
-    - munin-node
+  - git
+  - apache
+  - mysql
+  - php
+  - php-mysql
+  - composer
+  - drush
+  - munin
+  - munin-node
 
   tasks:
-    - name: Ensure that the web user exists.
-      user:
-        name: "{{ web_user }}"
-        groups: "{{ web_server_group }}"
-        append: yes
-        shell: /bin/bash
-        state: present
+  - name: Ensure that the web user exists.
+    user:
+      name: "{{ web_user }}"
+      groups: "{{ web_server_group }}"
+      append: yes
+      shell: /bin/bash
+      state: present
 
-    - name: Set up authorized_keys for the web user.
-      authorized_key:
-        user: "{{ web_user }}"
-        key: "{{ item }}"
-        state: present
-      with_file: /Users/benji/.ssh/id_rsa.pub
+  - name: Set up authorized_keys for the web user.
+    authorized_key:
+      user: "{{ web_user }}"
+      key: "{{ item }}"
+      state: present
+    with_file: /Users/benji/.ssh/id_rsa.pub
 
-    - name: Ensure that required directories are created.
-      file:
-        path: "{{ web_base_dir }}/{{ item.key }}"
-        mode: "{{ item.value }}"
-        owner: "{{ web_user }}"
-        group: "{{ web_server_group }}"
-        state: directory
-        recurse: yes
-      with_dict: web_dirs
+  - name: Ensure that required directories are created.
+    file:
+      path: "{{ web_base_dir }}/{{ item.key }}"
+      mode: "{{ item.value }}"
+      owner: "{{ web_user }}"
+      group: "{{ web_server_group }}"
+      state: directory
+      recurse: yes
+    with_dict: web_dirs
 
-    - name: Ensure that access is granted to web roots.
-      template:
-        src=templates/security-arachne.conf.j2
-        dest=/etc/apache2/conf-available/security-arachne.conf
+  - name: Ensure that access is granted to web roots.
+    template:
+      src=templates/security-arachne.conf.j2
+      dest=/etc/apache2/conf-available/security-arachne.conf
 
-    - name: Ensure that the custom access control is enabled.
-      command: a2enconf security-arachne
-      notify: restart apache
+  - name: Ensure that the custom access control is enabled.
+    command: a2enconf security-arachne
+    notify: restart apache
 
-    - name: Install the vhost files.
-      copy:
-        dest: /etc/apache2/sites-available/{{ item.name }}.conf
-        src: "{{ item.vhost }}"
-      with_items: drupal_sites
+  - name: Install the vhost files.
+    copy:
+      dest: /etc/apache2/sites-available/{{ item.name }}.conf
+      src: "{{ item.vhost }}"
+    with_items: drupal_sites
 
-    - name: Enable the vhost files.
-      command: a2ensite {{ item.name }}
-      with_items: drupal_sites
-      notify: restart apache
+  - name: Enable the vhost files.
+    command: a2ensite {{ item.name }}
+    with_items: drupal_sites
+    notify: restart apache
 
-    - name: Ensure that the bare repositories are initialized.
-      command: >
-        git init --bare  --shared=0600
-        {{ web_base_dir }}/repos/{{ item.name }}.git
-      sudo: yes
-      sudo_user: "{{ web_user }}"
-      with_items: drupal_sites
+  - name: Ensure that the bare repositories are initialized.
+    command: >
+      git init --bare  --shared=0600
+      {{ web_base_dir }}/repos/{{ item.name }}.git
+    sudo: yes
+    sudo_user: "{{ web_user }}"
+    with_items: drupal_sites
 
-    - name: Check whether the remote is defined.
-      command: git --git-dir={{ item.repo }}/.git remote
-      register: remote_exists
-      delegate_to: 127.0.0.1
-      sudo: False
-      changed_when: False
-      with_items: drupal_sites
+  - name: Check whether the remote is defined.
+    command: git --git-dir={{ item.repo }}/.git remote
+    register: remote_exists
+    delegate_to: 127.0.0.1
+    sudo: False
+    changed_when: False
+    with_items: drupal_sites
 
-    - name: Add the remote server to the local git repository.
-      command: >
-        {{ item.invocation.module_args }} add {{ hostname }}
-        {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item.name }}.git
-      when: not item['stdout'] | search(hostname)
-      delegate_to: 127.0.0.1
-      sudo: False
-      with_items: remote_exists.results
+  # This is as clear as mud.  Unfortunately, ansible does not allow include
+  # ... with_items.  Each item.invocation.module_args will be the argument
+  # passed to command in the previous task, namely "git --git-dir=... remote".
+  - name: Add the remote server to the local git repository.
+    command: >
+      {{ item.invocation.module_args }} add {{ hostname }}
+      {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item.name }}.git
+    when: not item['stdout'] | search(hostname)
+    delegate_to: 127.0.0.1
+    sudo: False
+    with_items: remote_exists.results
 
-    - name: Ensure that the repositories are cloned from local copies.
-      local_action: >
-        command git --git-dir={{ item.repo }}/.git push {{ hostname }} master
-      sudo: False
-      with_items: drupal_sites
-      # with_items: []
+  - name: Ensure that the repositories are cloned from local copies.
+    local_action: >
+      command git --git-dir={{ item.repo }}/.git push {{ hostname }} master
+    sudo: False
+    with_items: drupal_sites
+    # with_items: []
 
-    - name: Ensure that the repositories are cloned to the sites directory.
-      git:
-        repo: "{{ web_base_dir }}/repos/{{ item.name }}.git"
-        dest: "{{ web_base_dir }}/sites/{{ item.name }}"
-        update: yes
-      sudo: yes
-      sudo_user: "{{ web_user }}"
-      with_items: drupal_sites
+  - name: Ensure that the repositories are cloned to the sites directory.
+    git:
+      repo: "{{ web_base_dir }}/repos/{{ item.name }}.git"
+      dest: "{{ web_base_dir }}/sites/{{ item.name }}"
+      update: yes
+    sudo: yes
+    sudo_user: "{{ web_user }}"
+    with_items: drupal_sites
