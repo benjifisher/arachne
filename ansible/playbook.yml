@@ -1,5 +1,9 @@
 ---
-- hosts: all
+- hosts:
+  - vagrant
+  - prod
+  - default
+
   # gather_facts: no
 
   vars_files:
@@ -11,18 +15,9 @@
     hostname: name={{ hostname }}
     when: hostname is defined and hostname != 'skip'
 
-  roles:
-  - git
-  - apache
-  - mysql
-  - php
-  - php-mysql
-  - composer
-  - drush
-  - munin
-  - munin-node
+  - name: Debug.
+    debug: msg="groups - {{ group_names }}"
 
-  tasks:
   - name: Ensure that the web user exists.
     user:
       name: "{{ web_user }}"
@@ -37,6 +32,24 @@
       key: "{{ item }}"
       state: present
     with_file: /Users/benji/.ssh/id_rsa.pub
+
+  - name: Test SSH connection to the web user.
+    command: ssh {{ web_user }}@{{ hostname }} ls
+    delegate_to: 127.0.0.1
+    sudo: False
+
+  roles:
+  - git
+  - apache
+  - mysql
+  - php
+  - php-mysql
+  - composer
+  - drush
+  - munin
+  - munin-node
+
+  tasks:
 
   - name: Ensure that required directories are created.
     file:

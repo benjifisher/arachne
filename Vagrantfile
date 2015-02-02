@@ -34,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Enable provisioning with Ansible.
   config.vm.provision "ansible" do |ansible|
+    # ansible.groups = {"vagrant" => ['default']}
     ansible.playbook = "ansible/playbook.yml"
     ansible.sudo = true
     # ansible.raw_arguments = ['-vvv']

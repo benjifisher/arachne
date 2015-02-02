@@ -1,0 +1,4 @@
+---
+ansible_connection: local
+
+drupal_sites: []

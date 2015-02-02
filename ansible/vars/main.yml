@@ -55,20 +55,6 @@ mysql_databases:
     encoding: utf8
     replicate: 1
 
-drupal_sites:
-  - name: 3mile
-    repo: /Users/benji/Sites/3mile.org
-    vhost: ~/arachne/arachne-vm/vhosts/3mile.org.conf
-    server: '3mile.local'
-  - name: amcbostondev
-    repo: /Users/benji/Sites/amcboston.org
-    vhost: ~/arachne/arachne-vm/vhosts/amcbostondev.org.conf
-    server: 'amcbostondev.local'
-  - name: 200doc
-    repo: /Users/benji/Sites/200doc.org
-    vhost: ~/arachne/arachne-vm/vhosts/200doc.conf
-    server: '200doc.local'
-
 munin_hosts:
   - {
     name: "{{ hostname }}",
