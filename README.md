@@ -121,6 +121,12 @@ Before visiting a site, I need to do the following:
 Steps 1-4 and 9 are now handled by Ansible.  Soon, I will have to automate some
 of the remaining steps.
 
+To install a new site, there are several options.
+
+1. Use `drush make` and a makefile (.info or .yml format) to create a site from scratch.
+2. If I already have a codebase (a git repository) then use `drush site-install`:  for example, `$ drush si --account-mail=benji@FisherFam.org --db-url=mysql://200doc:200doc@localhost/200doc --site-mail=benji@FisherFam.org --site-name="200 Days of Code"`
+3. If I have a codebase and an existing site, then I can import the database with `drush sql-sync` or `drush sqlc < dump.sql`. I can use `drush rsync` to manage the files directory.
+
 ## Bugs
 
 - The `munin-node` service does not restart. Do `$ sudo service munin-node restart` manually in order to see the OPCache graph (in the nginx section, another todo).
