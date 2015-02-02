@@ -141,8 +141,17 @@
       group: "{{ web_user }}"
       state: directory
 
-  - name: Ensure that drush alias files are available on the server.
+  - name: Ensure that drush alias files are created on the server.
     template:
       dest: /etc/drush/{{ item.name }}.alias.drushrc.php
       src: templates/remote.drushrc.php.j2
+      owner: "{{ web_user }}"
+      group: "{{ web_user }}"
     with_items: drupal_sites
+
+  - name: Ensure that a local drush alias file is created.
+    template:
+      dest: ~/.drush/{{ hostname }}.aliases.drushrc.php
+      src: templates/local.drushrc.php.j2
+    delegate_to: 127.0.0.1
+    sudo: False

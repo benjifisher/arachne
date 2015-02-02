@@ -1,5 +1,7 @@
 <?php
 # {{ ansible_managed }}
+# usage:
+# $ drush @{{ item.name }} status
 $aliases['{{ item.name }}'] = array(
  'root' => '{{ web_base_dir }}/sites/{{ item.name }}/drupal',
  'uri' => 'http://{{ item.server }}',

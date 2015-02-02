@@ -1,0 +1,16 @@
+<?php
+# {{ ansible_managed }}
+# usage:
+# $ drush @{{ hostname }}.site status
+$aliases['{{ hostname }}'] = array(
+ 'remote-host' => '{{ hostname }}',
+ 'remote-user' => '{{ web_user }}',
+);
+{% for item in drupal_sites %}
+
+$aliases['{{ item.name }}'] = array(
+ 'parent' => '@{{ hostname }}',
+ 'root' => '{{ web_base_dir }}/sites/{{ item.name }}/drupal',
+ 'uri' => 'http://{{ item.server }}',
+);
+{% endfor %}
