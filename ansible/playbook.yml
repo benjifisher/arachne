@@ -114,6 +114,8 @@
     command: >
       {{ item.invocation.module_args }} add {{ hostname }}
       {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item.name }}.git
+# todo: the when clause is not specific enough.  Something like
+# when: hostname not in item['stdout_lines']
     when: not item['stdout'] | search(hostname)
     delegate_to: 127.0.0.1
     sudo: False

@@ -1,10 +1,7 @@
 ---
-# If using a numeric IP address, then make sure that it agrees with the one
-# specified in the Vagrantfile.
-ansible_ssh_host: 192.168.88.88
-ansible_ssh_port: 22
-ansible_ssh_user: vagrant
-ansible_ssh_private_key_file: ~/.vagrant.d/insecure_private_key
+
+# This should be overridden in the inventory file. This value will be used
+# when Ansible is called from vagrant.
 hostname: arachne.dev
 
 drupal_sites:
