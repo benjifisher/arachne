@@ -1,27 +1,27 @@
 [submodule "ansible/roles/ansible-role-apache"]
-	path = ansible/roles/apache
+	path = ansible/roles/geerlingguy.apache
 	url = git@github.com:geerlingguy/ansible-role-apache.git
 [submodule "ansible/roles/ansible-role-composer"]
-	path = ansible/roles/composer
+	path = ansible/roles/geerlingguy.composer
 	url = git@github.com:geerlingguy/ansible-role-composer.git
 [submodule "ansible/roles/ansible-role-drush"]
-	path = ansible/roles/drush
+	path = ansible/roles/geerlingguy.drush
 	url = git@github.com:geerlingguy/ansible-role-drush.git
 [submodule "ansible/roles/ansible-role-git"]
-	path = ansible/roles/git
+	path = ansible/roles/geerlingguy.git
 	url = git@github.com:geerlingguy/ansible-role-git.git
 [submodule "ansible/roles/ansible-role-php"]
-	path = ansible/roles/php
+	path = ansible/roles/geerlingguy.php
 	url = git@github.com:geerlingguy/ansible-role-php.git
 [submodule "ansible/roles/munin"]
-	path = ansible/roles/munin
+	path = ansible/roles/geerlingguy.munin
 	url = git@github.com:geerlingguy/ansible-role-munin.git
 [submodule "ansible/roles/munin-node"]
-	path = ansible/roles/munin-node
+	path = ansible/roles/geerlingguy.munin-node
 	url = git@github.com:geerlingguy/ansible-role-munin-node.git
 [submodule "ansible/roles/mysql"]
-	path = ansible/roles/mysql
+	path = ansible/roles/geerlingguy.mysql
 	url = git@github.com:geerlingguy/ansible-role-mysql.git
 [submodule "ansible/roles/php-mysql"]
-	path = ansible/roles/php-mysql
+	path = ansible/roles/geerlingguy.php-mysql
 	url = git@github.com:geerlingguy/ansible-role-php-mysql.git

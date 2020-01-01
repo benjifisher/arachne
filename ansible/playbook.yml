@@ -39,15 +39,15 @@
     sudo: False
 
   roles:
-  - git
-  - apache
-  - mysql
-  - php
-  - php-mysql
-  - composer
-  - drush
-  - munin
-  - munin-node
+  - geerlingguy.git
+  - geerlingguy.apache
+  - geerlingguy.mysql
+  - geerlingguy.php
+  - geerlingguy.php-mysql
+  - geerlingguy.composer
+  - geerlingguy.drush
+  - geerlingguy.munin
+  - geerlingguy.munin-node
 
   tasks:
 
