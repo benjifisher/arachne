@@ -31,7 +31,7 @@
       user: "{{ web_user }}"
       key: "{{ item }}"
       state: present
-    with_file: /Users/benji/.ssh/id_rsa.pub
+    with_file: /home/benji/.ssh/id_rsa.pub
 
   - name: Test SSH connection to the web user.
     command: ssh {{ web_user }}@{{ hostname }} ls
