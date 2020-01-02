@@ -32,6 +32,8 @@
       state: present
     with_file: /home/benji/.ssh/id_rsa.pub
 
+    # todo: either replace hostname with ansible_ssh_host or add hostname to the
+    # local SSH config file.
   - name: Test SSH connection to the web user.
     command: ssh {{ web_user }}@{{ hostname }} ls
     delegate_to: 127.0.0.1
