@@ -6,14 +6,14 @@ hostname: arachne.dev
 
 drupal_sites:
   - name: 3mile
-    repo: /Users/benji/Sites/3mile.org
-    vhost: ~/arachne/arachne-vm/vhosts/3mile.org.conf
+    repo: /home/benji/Sites/3mile
+    vhost: ~/ansible/arachne/vhosts/3mile.org.conf
     server: '3mile.local'
-  - name: amcbostondev
-    repo: /Users/benji/Sites/amcboston.org
-    vhost: ~/arachne/arachne-vm/vhosts/amcbostondev.org.conf
-    server: 'amcbostondev.local'
+  - name: amcboston
+    repo: /home/benji/Sites/amcboston
+    vhost: ~/ansible/arachne/vhosts/amcboston.org.conf
+    server: 'amcboston.local'
   - name: 200doc
-    repo: /Users/benji/Sites/200doc.org
-    vhost: ~/arachne/arachne-vm/vhosts/200doc.conf
+    repo: /home/benji/Sites/200doc
+    vhost: ~/ansible/arachne/vhosts/200doc.conf
     server: '200doc.local'
