@@ -70,86 +70,17 @@
     command: a2enconf security-arachne
     notify: restart apache
 
-  - name: Install the vhost files.
-    copy:
-      dest: /etc/apache2/sites-available/{{ item.name }}.conf
-      src: "{{ item.vhost }}"
-    with_items: drupal_sites
-
-  - name: Enable the vhost files.
-    command: a2ensite {{ item.name }}
-    with_items: drupal_sites
-    notify: restart apache
-
-  # See https://www.drupal.org/node/811406
-  - name: Ensure that the server recognizes itself.
-    lineinfile:
-      dest: /etc/hosts
-      state: present
-      insertafter: '127\.0\.0\.1 localhost'
-      line: "127.0.0.1 {{ item.server }}"
-    with_items: drupal_sites
-    when: ansible_ssh_user == 'vagrant'
-
-  - name: Ensure that the bare repositories are initialized.
-    command: >
-      git init --bare  --shared=0600
-      {{ web_base_dir }}/repos/{{ item.name }}.git
-    sudo: yes
-    sudo_user: "{{ web_user }}"
-    with_items: drupal_sites
-
-  - name: Check whether the remote is defined.
-    command: git --git-dir={{ item.repo }}/.git remote
-    register: remote_exists
-    delegate_to: 127.0.0.1
-    sudo: False
-    changed_when: False
-    with_items: drupal_sites
-
-  # This is as clear as mud.  Unfortunately, ansible does not allow include
-  # ... with_items.  Each item.invocation.module_args will be the argument
-  # passed to command in the previous task, namely "git --git-dir=... remote".
-  - name: Add the remote server to the local git repository.
-    command: >
-      {{ item.invocation.module_args }} add {{ hostname }}
-      {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ item.item.name }}.git
-# todo: the when clause is not specific enough.  Something like
-# when: hostname not in item['stdout_lines']
-    when: not item['stdout'] | search(hostname)
-    delegate_to: 127.0.0.1
-    sudo: False
-    with_items: remote_exists.results
-
-  - name: Ensure that the repositories are cloned from local copies.
-    local_action: >
-      command git --git-dir={{ item.repo }}/.git push {{ hostname }} master
-    sudo: False
-    with_items: drupal_sites
-    # with_items: []
-
-  - name: Ensure that the repositories are cloned to the sites directory.
-    git:
-      repo: "{{ web_base_dir }}/repos/{{ item.name }}.git"
-      dest: "{{ web_base_dir }}/sites/{{ item.name }}"
-      update: yes
-    sudo: yes
-    sudo_user: "{{ web_user }}"
-    with_items: drupal_sites
-
   - name: Ensure that /etc/drush is created.
     file:
       path: /etc/drush
       group: "{{ web_user }}"
       state: directory
 
-  - name: Ensure that drush alias files are created on the server.
-    template:
-      dest: /etc/drush/{{ item.name }}.alias.drushrc.php
-      src: templates/remote.drushrc.php.j2
-      owner: "{{ web_user }}"
-      group: "{{ web_user }}"
-    with_items: drupal_sites
+  - name: Set up the Drupal sites defined in the group_vars file.
+    include_tasks: tasks/addsite.yml
+    vars:
+      site_info: "{{ item }}"
+    with_items: "{{ drupal_sites }}"
 
   - name: Ensure that a local drush alias file is created.
     template:

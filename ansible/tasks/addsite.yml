@@ -1,0 +1,63 @@
+---
+
+  - name: Install the vhost files.
+    copy:
+      dest: /etc/apache2/sites-available/{{ site_info.name }}.conf
+      src: "{{ site_info.vhost }}"
+
+  - name: Enable the vhost files.
+    command: a2ensite {{ site_info.name }}
+    notify: restart apache
+
+  # See https://www.drupal.org/node/811406
+  - name: Ensure that the server recognizes itself.
+    lineinfile:
+      dest: /etc/hosts
+      state: present
+      insertafter: '127\.0\.0\.1 localhost'
+      line: "127.0.0.1 {{ site_info.server }}"
+    when: ansible_ssh_user == 'vagrant'
+
+  - name: Ensure that the bare repositories are initialized.
+    command: >
+      git init --bare  --shared=0600
+      {{ web_base_dir }}/repos/{{ site_info.name }}.git
+    sudo: yes
+    sudo_user: "{{ web_user }}"
+
+  - name: Check whether the remote is defined.
+    command: git -C {{ site_info.repo }} remote
+    register: remote_exists
+    delegate_to: 127.0.0.1
+    sudo: False
+    changed_when: False
+
+  - name: Add the remote server to the local git repository.
+    command: >
+      git -C {{ site_info.repo }} remote add {{ hostname }}
+      {{ web_user }}@{{ hostname }}:{{ web_base_dir }}/repos/{{ site_info.name }}.git
+    # todo: the when clause is not specific enough.  Something like
+    when: hostname not in remote_exists.stdout_lines
+    ## when: not item['stdout'] | search(hostname)
+    delegate_to: 127.0.0.1
+    sudo: False
+
+  - name: Ensure that the repositories are cloned from local copies.
+    local_action: >
+      command git -C {{ site_info.repo }} push {{ hostname }} master
+    sudo: False
+
+  - name: Ensure that the repositories are cloned to the sites directory.
+    git:
+      repo: "{{ web_base_dir }}/repos/{{ site_info.name }}.git"
+      dest: "{{ web_base_dir }}/sites/{{ site_info.name }}"
+      update: yes
+    sudo: yes
+    sudo_user: "{{ web_user }}"
+
+  - name: Ensure that drush alias files are created on the server.
+    template:
+      dest: /etc/drush/{{ site_info.name }}.alias.drushrc.php
+      src: templates/remote.drushrc.php.j2
+      owner: "{{ web_user }}"
+      group: "{{ web_user }}"
