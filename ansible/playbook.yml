@@ -59,7 +59,6 @@
       owner: "{{ web_user }}"
       group: "{{ web_server_group }}"
       state: directory
-      recurse: yes
     with_dict: web_dirs
 
   - name: Ensure that access is granted to web roots.
