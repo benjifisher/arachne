@@ -37,7 +37,7 @@
   - name: Test SSH connection to the web user.
     command: ssh {{ web_user }}@{{ hostname }} ls
     delegate_to: 127.0.0.1
-    sudo: False
+    become: False
 
   roles:
   - geerlingguy.git
@@ -87,4 +87,4 @@
       dest: ~/.drush/{{ hostname }}.aliases.drushrc.php
       src: templates/local.drushrc.php.j2
     delegate_to: 127.0.0.1
-    sudo: False
+    become: False

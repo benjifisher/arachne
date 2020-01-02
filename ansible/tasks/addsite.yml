@@ -22,14 +22,14 @@
     command: >
       git init --bare  --shared=0600
       {{ web_base_dir }}/repos/{{ site_info.name }}.git
-    sudo: yes
-    sudo_user: "{{ web_user }}"
+    become: yes
+    become_user: "{{ web_user }}"
 
   - name: Check whether the remote is defined.
     command: git -C {{ site_info.repo }} remote
     register: remote_exists
     delegate_to: 127.0.0.1
-    sudo: False
+    become: False
     changed_when: False
 
   - name: Add the remote server to the local git repository.
@@ -40,20 +40,20 @@
     when: hostname not in remote_exists.stdout_lines
     ## when: not item['stdout'] | search(hostname)
     delegate_to: 127.0.0.1
-    sudo: False
+    become: False
 
   - name: Ensure that the repositories are cloned from local copies.
     local_action: >
       command git -C {{ site_info.repo }} push {{ hostname }} master
-    sudo: False
+    become: False
 
   - name: Ensure that the repositories are cloned to the sites directory.
     git:
       repo: "{{ web_base_dir }}/repos/{{ site_info.name }}.git"
       dest: "{{ web_base_dir }}/sites/{{ site_info.name }}"
       update: yes
-    sudo: yes
-    sudo_user: "{{ web_user }}"
+    become: yes
+    become_user: "{{ web_user }}"
 
   - name: Ensure that drush alias files are created on the server.
     template:
