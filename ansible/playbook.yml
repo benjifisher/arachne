@@ -65,6 +65,7 @@
     become_user: drupal
   - geerlingguy.munin
   - geerlingguy.munin-node
+  - geerlingguy.security
 
   tasks:
 

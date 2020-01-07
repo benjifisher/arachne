@@ -29,6 +29,13 @@ mysql_key_buffer_size: "16M"
 mysql_max_allowed_packet: "16M"
 mysql_myisam_sort_buffer_size: "16M"
 
+## Security settings
+security_sudoers_passwordless:
+  - drupal
+security_autoupdate_reboot: true
+security_autoupdate_reboot_time: "06:00"
+security_autoupdate_mail_to: "benji@FisherFam.org"
+
 ## PHP settings
 php_memory_limit: "128M"
 php_max_execution_time: "30"
