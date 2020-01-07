@@ -51,7 +51,7 @@ mysql_databases:
     collation: utf8_general_ci
     encoding: utf8
     replicate: 1
-  - name: amcbostondev
+  - name: amcboston
     collation: utf8_general_ci
     encoding: utf8
     replicate: 1
