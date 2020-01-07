@@ -25,6 +25,19 @@
       shell: /bin/bash
       state: present
 
+  - name: Ensure that the web user's bin directory is created.
+    file:
+      path: /home/{{ web_user }}/bin
+      owner: "{{ web_user }}"
+      group: "{{ web_user }}"
+      state: directory
+
+  - name: Add the bin directory to the web user's path.
+    lineinfile:
+      path: /home/{{ web_user }}/.bashrc
+      create: yes
+      line: "export PATH=$PATH:$HOME/bin"
+
   - name: Set up authorized_keys for the web user.
     authorized_key:
       user: "{{ web_user }}"
@@ -46,7 +59,9 @@
   - geerlingguy.php
   - geerlingguy.php-mysql
   - geerlingguy.composer
-  - geerlingguy.drush
+  - role: geerlingguy.drush
+    become: yes
+    become_user: drupal
   - geerlingguy.munin
   - geerlingguy.munin-node
 

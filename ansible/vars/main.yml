@@ -73,4 +73,8 @@ php_apc_shm_size: "256M"
 php_enable_opcache: true
 
 # This is used for the update option on the git module.
-drush_keep_updated : yes
+drush_launcher_install: false
+drush_composer_global_install: true
+drush_composer_version: "^8.3"
+drush_composer_update: true
+drush_composer_path: /home/drupal/bin/drush
