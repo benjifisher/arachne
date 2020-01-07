@@ -53,6 +53,7 @@
     become: False
 
   roles:
+  - geerlingguy.exim
   - geerlingguy.git
   - geerlingguy.apache
   - geerlingguy.mysql
