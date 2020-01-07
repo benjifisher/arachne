@@ -25,3 +25,15 @@
 [submodule "ansible/roles/php-mysql"]
 	path = ansible/roles/geerlingguy.php-mysql
 	url = git@github.com:geerlingguy/ansible-role-php-mysql.git
+[submodule "ansible/roles/ansible-role-exim"]
+	path = ansible/roles/geerlingguy.exim
+	url = git@github.com:geerlingguy/ansible-role-exim
+[submodule "ansible/roles/ansible-role-security"]
+	path = ansible/roles/geerlingguy.security
+	url = git@github.com:geerlingguy/ansible-role-security
+[submodule "ansible/roles/ansible-role-firewall"]
+	path = ansible/roles/geerlingguy.firewall
+	url = git@github.com:geerlingguy/ansible-role-firewall
+[submodule "ansible/roles/ansible-role-certbot"]
+	path = ansible/roles/geerlingguy.certbot
+	url = git@github.com:geerlingguy/ansible-role-certbot
