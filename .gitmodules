@@ -37,3 +37,6 @@
 [submodule "ansible/roles/ansible-role-certbot"]
 	path = ansible/roles/geerlingguy.certbot
 	url = git@github.com:geerlingguy/ansible-role-certbot
+[submodule "ansible/roles/geerlingguy.pip"]
+	path = ansible/roles/geerlingguy.pip
+	url = git@github.com:geerlingguy/ansible-role-pip.git
