@@ -67,6 +67,7 @@
   - geerlingguy.munin-node
   - geerlingguy.security
   - geerlingguy.firewall
+  - geerlingguy.certbot
 
   tasks:
 

@@ -23,6 +23,17 @@ apache_mods_enabled:
   - rewrite.load
   - ssl.load
 
+## Certbot settings
+certbot_auto_renew_user: "{{ web_user }}"
+certbot_auto_renew_hour: "4"
+certbot_auto_renew_minute: "17"
+certbot_admin_email: benji@FisherFam.org
+certbot_certs: []
+certbot_create_standalone_stop_services:
+  # - nginx
+  - apache
+  # - varnish
+
 ## Firewall settings
 # The default includes 25, for SMTP.
 firewall_allowed_tcp_ports:
