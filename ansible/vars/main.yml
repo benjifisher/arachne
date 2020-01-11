@@ -64,6 +64,13 @@ php_short_open_tag: true
 php_default_version_debian: "7.2"
 php_mysql_package: php7.2-mysql
 
+## Pip settings
+pip_package: python3-pip
+pip_executable: pip3
+pip_install_packages:
+  - passlib
+  - pymysql
+
 ## Git settings
 # Only install git, no extra packages.
 git_packages:
