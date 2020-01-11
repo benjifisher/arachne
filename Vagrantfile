@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
     # ansible.groups = {"vagrant" => ['default']}
     ansible.playbook = "ansible/playbook.yml"
     ansible.become = true
-    ansible.inventory_path = "ansible/hosts"
+    ansible.inventory_path = "ansible/hosts.yml"
     ansible.limit = "vagrant"
     # ansible.verbose = 'vvv'
   end
